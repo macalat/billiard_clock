@@ -31,9 +31,9 @@ class _BilliardClockState extends State<BilliardClock>
   int _ballNum1;
   int _ballNum2;
   int _ballNum3;
-  int nextBallNum1;
-  int nextBallNum2;
-  int nextBallNum3;
+  int _nextBallNum1;
+  int _nextBallNum2;
+  int _nextBallNum3;
 
   int _numpos1;
   int _numpos2;
@@ -71,11 +71,17 @@ class _BilliardClockState extends State<BilliardClock>
     _numpos3 = Random().nextInt(8);
 
     _controller1 = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
     _controller2 = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
     _controller3 = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
 
     _dateTime = DateTime.now();
 
@@ -98,15 +104,16 @@ class _BilliardClockState extends State<BilliardClock>
       if (!isInit) {
         _dateTime = DateTime.now();
 
-        nextBallNum1 = int.parse(DateFormat('hh').format(_dateTime).toString());
+        _nextBallNum1 =
+            int.parse(DateFormat('hh').format(_dateTime).toString());
         _minute = int.parse(DateFormat('mm').format(_dateTime).toString());
 
         if (_minute < 10) {
-          nextBallNum2 = 0;
-          nextBallNum3 = int.parse(_minute.toString().substring(0));
+          _nextBallNum2 = 0;
+          _nextBallNum3 = int.parse(_minute.toString().substring(0));
         } else {
-          nextBallNum2 = int.parse(_minute.toString().substring(0, 1));
-          nextBallNum3 = int.parse(_minute.toString().substring(1));
+          _nextBallNum2 = int.parse(_minute.toString().substring(0, 1));
+          _nextBallNum3 = int.parse(_minute.toString().substring(1));
         }
         _playAnimation();
       }
@@ -151,9 +158,9 @@ class _BilliardClockState extends State<BilliardClock>
   checkStart() async {
     int index;
 
-    if (nextBallNum3 == 0 && nextBallNum2 == 0) {
+    if (_nextBallNum3 == 0 && _nextBallNum2 == 0) {
       index = 3;
-    } else if (nextBallNum3 == 0 && nextBallNum2 > 0) {
+    } else if (_nextBallNum3 == 0 && _nextBallNum2 > 0) {
       index = 2;
     } else {
       index = 1;
@@ -180,17 +187,17 @@ class _BilliardClockState extends State<BilliardClock>
   checkReverse() async {
     int index;
 
-    if (nextBallNum3 == 0 && nextBallNum2 == 0) {
+    if (_nextBallNum3 == 0 && _nextBallNum2 == 0) {
       index = 3;
-    } else if (nextBallNum3 == 0 && nextBallNum2 > 0) {
+    } else if (_nextBallNum3 == 0 && _nextBallNum2 > 0) {
       index = 2;
     } else {
       index = 1;
     }
 
-    _ballNum1 = nextBallNum1;
-    _ballNum2 = nextBallNum2;
-    _ballNum3 = nextBallNum3;
+    _ballNum1 = _nextBallNum1;
+    _ballNum2 = _nextBallNum2;
+    _ballNum3 = _nextBallNum3;
 
     switch (index) {
       case 1:
@@ -213,9 +220,9 @@ class _BilliardClockState extends State<BilliardClock>
   ///
   updateAngle() {
     int index;
-    if (nextBallNum3 == 0 && nextBallNum2 == 0) {
+    if (_nextBallNum3 == 0 && _nextBallNum2 == 0) {
       index = 3;
-    } else if (nextBallNum3 == 0 && nextBallNum2 > 0) {
+    } else if (_nextBallNum3 == 0 && _nextBallNum2 > 0) {
       index = 2;
     } else {
       index = 1;
@@ -242,9 +249,9 @@ class _BilliardClockState extends State<BilliardClock>
   ///
   updateLabelPosition() {
     int index;
-    if (nextBallNum3 == 0 && nextBallNum2 == 0) {
+    if (_nextBallNum3 == 0 && _nextBallNum2 == 0) {
       index = 3;
-    } else if (nextBallNum3 == 0 && nextBallNum2 > 0) {
+    } else if (_nextBallNum3 == 0 && _nextBallNum2 > 0) {
       index = 2;
     } else {
       index = 1;
